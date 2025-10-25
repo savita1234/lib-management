@@ -1,8 +1,12 @@
-const book = require('./models/book.js');
+import { getBookDetails, addBook, updateBook,bookByID,deleteBookByID } from './controllers/book.js';
 
 const resolvers = {
   hello: () => "this is my 1st graphql-url",
-   books: async () => await book.find(),
+   books: getBookDetails(),
+   createBook: async ({input}) => await addBook(input),
+   updateBook: async({input}) => await updateBook(input),
+   bookById: async ({id}) => await bookByID(id),
+   deleteBook: async({id}) => await deleteBookByID(id),
 };
 
-module.exports = resolvers;
+export default resolvers;

@@ -1,10 +1,28 @@
 type Query{
  hello: String
  books: [Book]
+ bookById(id: ID): Book
 }
 
 type Book{
 id: ID
 name: String
 author: String
+}
+
+type Mutation{
+createBook(input: createBookInput): Book
+updateBook(input: updateBookInput): Book
+deleteBook(id: ID!):Book
+}
+
+input createBookInput{
+name: String!
+author:String!
+}
+
+input updateBookInput{
+id: ID!
+name: String!
+author:String!
 }

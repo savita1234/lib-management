@@ -1,20 +1,21 @@
-const express = require('express');
-const { graphqlHTTP } = require('express-graphql');
-const { buildSchema } = require('graphql');
-const {mongoose} = require('mongoose');
-const fs = require('fs');
-const path = require('path');
+import express from 'express';
+import { graphqlHTTP } from 'express-graphql';
+import { buildSchema } from 'graphql';
+import mongoose from 'mongoose';
+import fs from 'fs';
+import path from 'path';
+import { readFile } from 'node:fs/promises';
+import  resolvers  from './resolvers.js';
 
-const root = require('./resolvers');
 const app = express();
 const port = 3000;
 
-mongoose.connect('mongodb://localhost:27017/library_system',{ useNewUrlParser: true, useUnifiedTopology: true });
-const schemaString = fs.readFileSync(path.join(__dirname, 'schema.graphql'), 'utf8');
+mongoose.connect('mongodb://localhost:27017/library_system');
+const schemaString = await readFile('./schema.graphql','utf-8');
 const schema = buildSchema(schemaString);
 app.use('/graphql', graphqlHTTP({
     schema,
-    rootValue: root,
+    rootValue: resolvers,
 }));
 
 app.get('/', (req,res)=> {

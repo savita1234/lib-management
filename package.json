@@ -1,4 +1,10 @@
 {
+    "name": "my-project",
+    "type": "module", 
+    "main": "index.js",
+    "scripts": {
+      "start": "node app.js"
+    },
   "dependencies": {
     "express": "^5.1.0",
     "express-graphql": "^0.12.0",
